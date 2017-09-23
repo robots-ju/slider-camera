@@ -9,6 +9,7 @@ function addPoint(){
   if(tablePoint.length+1 <= maxPoint){
     let id = tablePoint.length;
     tablePoint[tablePoint.length] = {
+        selected: false,
         id: id,
         x: tablePoint.length*20,
         y: 0,
@@ -47,6 +48,7 @@ canvas.addEventListener('click',(e)=>{
     for (var i = 0; i < tablePoint.length; i++) {
       if(isIn(pos,tablePoint[i])){
         selectedPoint = i;
+        tablePoint[i].selected = true
         update()
         break
       }
@@ -93,8 +95,10 @@ function eventAddPoint(){
 }
 function drawPoint(point){
   ctx.fillStyle='#990404'
+  if(point.selected = true) ctx.fillStyle='#333333'
+  else ctx.fillStyle='#ffffff'
   ctx.fillRect(point.x,point.y,point.width,point.height)
-  ctx.fillStyle='#FFFFFF'
+  ctx.fillStyle='ffffff'
   ctx.font='20px DejaVu Sans Mono'
   ctx.fillText(point.id,point.x,20)
 }
