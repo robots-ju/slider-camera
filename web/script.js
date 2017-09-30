@@ -4,6 +4,7 @@ const socket = io.connect('http://127.0.0.1:8080');
 let pos1 = document.getElementById('position1')
 let pos2 = document.getElementById('position2')
 let echelle = document.getElementById('echelle')
+let duration = document.getElementById('duration')
 const ctx = canvas.getContext('2d')
 
 let tablePoint = []
@@ -18,7 +19,7 @@ document.getElementById('animation').addEventListener('click',(e)=>{
   socket.emit('animation',{
     start: tablePoint[0].x,
     end: tablePoint[1].x,
-    duration: 100
+    duration: duration.value
   })
 });
 
