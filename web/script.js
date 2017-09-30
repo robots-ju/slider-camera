@@ -3,7 +3,7 @@ const canvas = document.getElementById('canvas');
 const socket = io.connect('http://127.0.0.1:8080');
 let pos1 = document.getElementById('position1');
 let pos2 = document.getElementById('position2');
-let echelle = document.getElementById('echelle');
+let scale = document.getElementById('scale');
 let duration = document.getElementById('duration');
 const ctx = canvas.getContext('2d');
 
@@ -196,7 +196,7 @@ function cleanCtx(){
 // Renvoit la position des points du tableau "tablePoint"
 
 function getPos1(){
-  return Math.floor(tablePoint[0].x/canvas.width * echelle.value);
+  return Math.floor(tablePoint[0].x/canvas.width * scale.value);
 }
 function getPosition(){
   try {
