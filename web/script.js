@@ -16,11 +16,18 @@ let selectedPoint = null;
 //Ajout de tout les evenement des boutons
 
 document.getElementById('animation').addEventListener('click',(e)=>{
-  socket.emit('animation',{
-    start: tablePoint[0].x,
-    end: tablePoint[1].x,
-    duration: duration.value
-  });
+  try {
+    let animation = {
+      start: convertPosition(tablePoint[0].x),
+      end: convertPosition(tablePoint[1].x),
+      duration: duration.value
+    }
+    socket.emit('animation',animation);
+    console.log('Envoi réussi!');
+  } catch (error) {
+    console.log("L'animation n'a pas pu être envoiée !")
+  }
+  
 });
 
 document.getElementById('clean').addEventListener('click',(e)=>{
@@ -33,7 +40,13 @@ document.getElementById('try').addEventListener('click',(e)=>{
 })
 
 document.getElementById('sendPosition').addEventListener('click',(e)=>{
-  socket.emit("position",getPos1());
+  try {
+    socket.emit("position",convertPosition(tablePoint[0].x));
+    console.log('Envoie réussi!')
+  } catch (error) {
+    console.log("L'envoie de la postion n'a pas fonctionné.")
+  }
+  
 });
 
 document.getElementById('add').addEventListener('click',eventAddPoint);
@@ -43,7 +56,12 @@ document.getElementById('delete').addEventListener('click',(e)=>{
     var point = tablePoint[index];
     if(point.selected){
       console.log(point);
-      tablePoint.slice(point);
+      tablePoint.splice(index,1);
+      selectedPoint = null;
+      tablePoint.forEach(function(element,index) {
+        element.id = index+1;
+      }, this);
+      console.log(tablePoint);
     }
     
   }
@@ -85,7 +103,7 @@ function addPoint(){
         width: 20
     };
   }else{
-    console.log('nbr max de point atteint');
+    console.log('nbr max de points atteint');
   }
 }
 
@@ -149,10 +167,10 @@ function update(){
   
   cleanCtx();
   document.getElementById('position').innerHTML = ''
-  tablePoint.forEach(function(element,index) {
-    let e = document.createElement('p');
-    e.innerHTML = 'Position ' +(index+1)+ ': '  + element.x;
-    document.getElementById('position').appendChild(e);
+  tablePoint.forEach(function(point,index) {
+    let parag = document.createElement('p');
+    parag.innerHTML = 'Position ' + (index+1)+ ': '  + convertPosition(point.x);
+    document.getElementById('position').appendChild(parag);
   }, this);
   
   for (var i = 0; i < tablePoint.length; i++) {
@@ -163,25 +181,30 @@ function update(){
 // Fonction de simulation de la trajectoire 
 
 function simuled(){
-  let x1 = tablePoint[0].x;
-  let x2 = tablePoint[1].x;
-  let direction;
-  if(x1 < x2){
-    direction = true;
-  }else{
-    direction = false;
-  }
-  ctx.fillStyle='#009933';
-  while(true){
-    ctx.fillRect(x1,0,20,20);
-    if(direction){
-      if(x1>x2) break;
-      x1++;
+  try {
+    let x1 = tablePoint[0].x;
+    let x2 = tablePoint[1].x;
+    let direction;
+    if(x1 < x2){
+      direction = true;
     }else{
-      if(x1<x2) break;
-      x1--;
+      direction = false;
     }
+    ctx.fillStyle='#009933';
+    while(true){
+      ctx.fillRect(x1,0,20,20);
+      if(direction){
+        if(x1>x2) break;
+        x1++;
+      }else{
+        if(x1<x2) break;
+        x1--;
+      }
+    }
+  } catch (error) {
+   console.log('La simulation ne peut pas se faire, si les deux points ne sont pas définient !') 
   }
+  
 }
 
 // Clean le canvas à son état initale
@@ -195,9 +218,10 @@ function cleanCtx(){
 
 // Renvoit la position des points du tableau "tablePoint"
 
-function getPos1(){
-  return Math.floor(tablePoint[0].x/canvas.width * scale.value);
+function convertPosition(value){
+  return Math.floor(value/canvas.width * scale.value);
 }
+/*
 function getPosition(){
   try {
     return [tablePoint[0].x,tablePoint[1].x];
@@ -205,5 +229,5 @@ function getPosition(){
     console.log('les points net sont pas bien definit !');
   } 
 }
-
+*/
 cleanCtx();
