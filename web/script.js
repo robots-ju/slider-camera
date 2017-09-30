@@ -23,9 +23,9 @@ document.getElementById('animation').addEventListener('click',(e)=>{
       duration: duration.value
     }
     socket.emit('animation',animation);
-    console.log('Envoie réussi!');
+    console.log('Envoi réussi!');
   } catch (error) {
-    console.log("L'animation n'a pas pu être envoyer !")
+    console.log("L'animation n'a pas pu être envoiée !")
   }
   
 });
@@ -56,7 +56,12 @@ document.getElementById('delete').addEventListener('click',(e)=>{
     var point = tablePoint[index];
     if(point.selected){
       console.log(point);
-      tablePoint.slice(point);
+      tablePoint.splice(index,1);
+      selectedPoint = null;
+      tablePoint.forEach(function(element,index) {
+        element.id = index+1;
+      }, this);
+      console.log(tablePoint);
     }
     
   }
@@ -98,7 +103,7 @@ function addPoint(){
         width: 20
     };
   }else{
-    console.log('nbr max de point atteint');
+    console.log('nbr max de points atteint');
   }
 }
 
