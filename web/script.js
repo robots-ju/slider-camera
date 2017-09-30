@@ -1,8 +1,11 @@
 //Declartions de toutes les variable principales
 const canvas = document.getElementById('canvas')
+const socket = io.connect('http://127.0.0.1:8080');
 let pos1 = document.getElementById('position1')
 let pos2 = document.getElementById('position2')
+let echelle = document.getElementById('echelle')
 const ctx = canvas.getContext('2d')
+
 let tablePoint = []
 let maxPoint = 2
 let selectedPoint = null;
@@ -11,8 +14,12 @@ let selectedPoint = null;
 //Envoyer la distance a parcourir en milimetre
 //Ajout de tout les evenement des boutons
 
-document.getElementById('start').addEventListener('click',(e)=>{
-  console.log('salut')
+document.getElementById('animation').addEventListener('click',(e)=>{
+  socket.emit('animation',{
+    start: tablePoint[0].x,
+    end: tablePoint[1].x,
+    duration: 100
+  })
 });
 
 document.getElementById('clean').addEventListener('click',(e)=>{
@@ -24,8 +31,9 @@ document.getElementById('try').addEventListener('click',(e)=>{
   simuled()
 })
 
-document.getElementById('stop').addEventListener('click',(e)=>{
-  console.log('salut')
+document.getElementById('sendPosition').addEventListener('click',(e)=>{
+  socket.emit("position",getPos1())
+  //console.log('salut')
 });
 
 document.getElementById('add').addEventListener('click',eventAddPoint);
@@ -201,6 +209,9 @@ function cleanCtx(){
 
 // Renvoit la position des points du tableau "tablePoint"
 
+function getPos1(){
+  return Math.floor(tablePoint[0].x/canvas.width * echelle.value);
+}
 function getPosition(){
   try {
     return [tablePoint[0].x,tablePoint[1].x]
