@@ -1,0 +1,11 @@
+{
+  "name": "slider-camera",
+  "private": false,
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "bluetooth-serial-port": "^2.1.4",
+    "socket.io": "^2.0.3"
+  }
+}

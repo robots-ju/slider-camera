@@ -7,6 +7,8 @@ let tablePoint = []
 let maxPoint = 2
 let selectedPoint = null;
 
+//Ajouter un parametre de la longueur en milimetre
+//Envoyer la distance a parcourir en milimetre
 //Ajout de tout les evenement des boutons
 
 document.getElementById('start').addEventListener('click',(e)=>{
@@ -29,6 +31,15 @@ document.getElementById('stop').addEventListener('click',(e)=>{
 document.getElementById('add').addEventListener('click',eventAddPoint);
 
 document.getElementById('delete').addEventListener('click',(e)=>{
+  for (var index = 0; index < tablePoint.length; index++) {
+    var point = tablePoint[index];
+    if(point.selected){
+      console.log(point)
+      tablePoint.slice(point);
+    }
+    
+  }
+  update()
 });
 
 // Gestion des evenements sur le canvas
@@ -127,16 +138,30 @@ function drawPoint(point){
 // Update la page web
 
 function update(){
+  
   cleanCtx()
+  document.getElementById('position').innerHTML = ''
+  tablePoint.forEach(function(element,index) {
+    
+    let e = document.createElement('p')
+    e.innerHTML = 'Position ' +(index+1)+ ': '  + element.x 
+    document.getElementById('position').appendChild(e)
+  }, this);
+  /*
   try {
     pos1.innerHTML = 'Position 1: ' + tablePoint[0].x
+  } catch (error) {
+    pos1.innerHTML = 'Postion 1: Null'
+  }
+  try {
+    //pos1.innerHTML = 'Position 1: ' + tablePoint[0].x
     pos2.innerHTML = 'Position 2: ' + tablePoint[1].x
   } catch (error) {
-    pos1.innerHTML = 'Null'
-    pos2.innerHTML = 'Null'
+    pos2.innerHTML = 'Position 2: Null'
   }
+  */
   for (var i = 0; i < tablePoint.length; i++) {
-    console.log(tablePoint[i])
+    //console.log(tablePoint[i])
     drawPoint(tablePoint[i])
   }
 }
@@ -178,7 +203,7 @@ function cleanCtx(){
 
 function getPosition(){
   try {
-    return [tablePoint[0],tablePoint[1]]
+    return [tablePoint[0].x,tablePoint[1].x]
   } catch (error) {
     console.log('les points net sont pas bien definit !');
   } 
