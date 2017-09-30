@@ -5,6 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "bluetooth-serial-port": "^2.1.4"
+    "bluetooth-serial-port": "^2.1.4",
+    "socket.io": "^2.0.3"
   }
 }
