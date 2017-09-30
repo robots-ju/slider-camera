@@ -29,6 +29,11 @@ document.getElementById('stop').addEventListener('click',(e)=>{
 document.getElementById('add').addEventListener('click',eventAddPoint);
 
 document.getElementById('delete').addEventListener('click',(e)=>{
+  tablePoint.forEach(function(element,index) {
+    if(element.selected){
+      tablePoint.remove(index)
+    }
+  }, this);
 });
 
 // Gestion des evenements sur le canvas
@@ -128,13 +133,26 @@ function drawPoint(point){
 
 function update(){
   cleanCtx()
+  document.getElementById('position').innerHTML = ''
+  tablePoint.forEach(function(element,index) {
+    
+    let e = document.createElement('p')
+    e.innerHTML = 'Position ' +(index+1)+ ': '  + element.x 
+    document.getElementById('position').appendChild(e)
+  }, this);
+  /*
   try {
     pos1.innerHTML = 'Position 1: ' + tablePoint[0].x
+  } catch (error) {
+    pos1.innerHTML = 'Postion 1: Null'
+  }
+  try {
+    //pos1.innerHTML = 'Position 1: ' + tablePoint[0].x
     pos2.innerHTML = 'Position 2: ' + tablePoint[1].x
   } catch (error) {
-    pos1.innerHTML = 'Null'
-    pos2.innerHTML = 'Null'
+    pos2.innerHTML = 'Position 2: Null'
   }
+  */
   for (var i = 0; i < tablePoint.length; i++) {
     console.log(tablePoint[i])
     drawPoint(tablePoint[i])
