@@ -19,19 +19,23 @@
         
       </hgroup>
       <div>
-        <p>Longueur du slicer (mm) <input type="number" id="echelle"></p>
+        <p>Longueur du slicer (mm) <input type="number" id="scale"></p>
+        <p>Durée de l'animation (ms) <input type="number" id="duration"></p>
       </div>
-      <canvas id="canvas" width="300" height="40"></canvas>
+      <div>
+        <canvas id="canvas" width="300" height="20"></canvas>
+      </div>
       <div id="position">
         <!-- <p id='position1'>Position1: </p>
         <p id='position2'>Position2: </p>-->
       </div>
       <hgroup id="id">
-        <button id="try">Essaier</button>
-        <button id="start">Demarrer</button>
-        <button id="stop">Stop</button>
+        <button id="try">Try</button>
+        <button id="animation">Animation</button>
+        <button id="sendPosition">Send Position</button>
         <button id="clean">Clean</button>
       </hgroup>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
       <script type="text/javascript" src="script.js"></script>
     </div>
   </body>
