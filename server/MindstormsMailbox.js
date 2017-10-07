@@ -28,30 +28,29 @@ class MindstormsMailbox extends EventEmitter {
      */
     debugMessage(...args) {
         if (this.debugEnabled) {
-            console.log(...args);
+            console.log('[bluetooth]', ...args);
         }
     }
 
-    connect() {
-        this.serial = new BluetoothSerialPort.BluetoothSerialPort();
+    connect(callback) {
+            this.serial = new BluetoothSerialPort.BluetoothSerialPort();
 
-        this.serial.on('found', (address, name) => {
-            this.serial.findSerialPortChannel(address, channel => {
-                this.serial.connect(address, channel, () => {
-                    this.debugMessage('connected');
+            this.serial.on('found', (address, name) => {
+                this.serial.findSerialPortChannel(address, channel => {
+                    this.serial.connect(address, channel, () => {
+                        this.debugMessage('connected');
+                        callback()
+                        this.serial.on('data', this.handleIncomingData);
+                    }, () => {
+                        this.debugMessage('cannot connect');
+                    });
 
-                    this.serial.on('data', this.handleIncomingData);
+                    this.serial.close();
                 }, () => {
-                    this.debugMessage('cannot connect');
+                    this.debugMessage('found nothing');
                 });
-
-                this.serial.close();
-            }, () => {
-                this.debugMessage('found nothing');
             });
-        });
-
-        this.serial.inquire();
+            this.serial.inquire();
     }
 
     /**
