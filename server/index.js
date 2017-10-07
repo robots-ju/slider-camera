@@ -57,7 +57,7 @@ const MindstormsMailbox = require('./MindstormsMailbox');
             }, duration);
         });
 
-        client('start', async () => {
+        client.on('start', async () => {
             await camera.start()
             console.log('Video started')
         })
