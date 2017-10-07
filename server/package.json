@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "bluetooth-serial-port": "^2.1.4",
+    "goproh4": "^0.4.2",
     "socket.io": "^2.0.3"
   },
   "scripts": {
