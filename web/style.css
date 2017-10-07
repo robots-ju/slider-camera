@@ -1,0 +1,23 @@
+html{
+    background-color: #008000;
+}
+html body{
+    max-width: 450px;
+    margin:auto;
+    text-align: center;
+    padding-bottom: 40px;
+}
+html body>div{
+    transform: scale(2.57);
+    background-color: #ffffff;
+    border-radius: 20px;
+    transform-origin: 50% 0px;
+}
+html body div h1{
+    background-color: #ffa000;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+html body div button#StartStopVideo{
+    margin: 20px 0 0;
+}
