@@ -40,7 +40,7 @@ class MindstormsMailbox extends EventEmitter {
                 this.serial.connect(address, channel, () => {
                     this.debugMessage('connected');
 
-                    this.serial.on('data', this.handleIncomingData);
+                    this.serial.on('data', this.handleIncomingData.bind(this));
                 }, () => {
                     this.debugMessage('cannot connect');
                 });
