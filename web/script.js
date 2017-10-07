@@ -11,6 +11,19 @@ let tablePoint = [];
 let maxPoint = 2;
 let selectedPoint = null;
 
+//bouton start stop vidéo
+
+let StartStopVideo=document.getElementById('StartStopVideo');
+StartStopVideo.addEventListener('click',function(){
+  if(StartStopVideo.innerHTML==='Start'){
+    StartStopVideo.innerHTML='Stop';
+    socket.emit('start');
+  }else{
+    StartStopVideo.innerHTML='Start';
+    socket.emit('stop');
+  }
+})
+
 //Ajouter un parametre de la longueur en milimetre
 //Envoyer la distance a parcourir en milimetre
 //Ajout de tout les evenement des boutons

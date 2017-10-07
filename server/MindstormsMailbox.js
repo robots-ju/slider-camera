@@ -46,6 +46,7 @@ class MindstormsMailbox extends EventEmitter {
                     });
 
                     this.serial.close();
+                    this.serial.on('data', this.handleIncomingData.bind(this));
                 }, () => {
                     this.debugMessage('found nothing');
                 });
