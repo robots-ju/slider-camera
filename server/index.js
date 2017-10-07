@@ -66,4 +66,4 @@ const MindstormsMailbox = require('./MindstormsMailbox');
             console.log('Video stopped')
         })
     });
-})
+})()
