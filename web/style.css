@@ -8,7 +8,6 @@ html body{
     padding-bottom: 40px;
 }
 html body>div{
-    transform: scale(2.57);
     background-color: #ffffff;
     border-radius: 20px;
     transform-origin: 50% 0px;
